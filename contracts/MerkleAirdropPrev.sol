@@ -40,7 +40,7 @@ contract MerkleAirdrop is Ownable {
 
     uint256 public tranches; //Airdrop-ын id-г хадгална.
 
-    constructor(IERC20 _token) public {
+    constructor(IERC20 _token) {
         token = _token;
         }
     
@@ -77,7 +77,7 @@ contract MerkleAirdrop is Ownable {
 
                 _claimWeek(_liquidityProvider, _tranche, _balance, _merkleProof);
 
-            _   disburse(_liquidityProvider, _balance);
+            _disburse(_liquidityProvider, _balance);
             }
     
     function claimWeeks(
