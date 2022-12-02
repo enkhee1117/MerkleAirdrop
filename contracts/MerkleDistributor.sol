@@ -4,7 +4,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 pragma solidity ^0.8.0;
 
-contract MerkleDistributor {
+contract Merkledistributor {
     address public immutable token;
     bytes32 public immutable merkleRoot;
 

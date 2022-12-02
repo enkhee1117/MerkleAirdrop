@@ -5,8 +5,9 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol";
 
-contract MyToken is ERC20, ERC20Burnable, Pausable, Ownable {
+contract Cryptopuujin is ERC20, ERC20Burnable, Pausable, Ownable, ERC20Snapshot {
     constructor() ERC20("CRYPTOPUUJIN", "PUUJIN") {}
 
     function pause() public onlyOwner {
@@ -24,7 +25,7 @@ contract MyToken is ERC20, ERC20Burnable, Pausable, Ownable {
     function _beforeTokenTransfer(address from, address to, uint256 amount)
         internal
         whenNotPaused
-        override
+        override(ERC20, ERC20Snapshot)
     {
         super._beforeTokenTransfer(from, to, amount);
     }
