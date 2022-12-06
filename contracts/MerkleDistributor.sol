@@ -21,10 +21,12 @@ contract Merkledistributor {
         bytes32[] calldata merkleProof
     ) external {
         require(!isClaimed[account], 'Already claimed.');
-
-        bytes32 node = keccak256(
-            abi.encodePacked(account, amount)
-        );
+        // Taking double hash instead of one
+        bytes32 node = keccak256(bytes.concat(keccak256(abi.encode(account, amount))));
+        // If you are taking just one hash of the node: you can use this one instead. 
+        // bytes32 node = keccak256(
+        //     abi.encodePacked(account, amount)
+        // );
         bool isValidProof = MerkleProof.verifyCalldata(
             merkleProof,
             merkleRoot,
