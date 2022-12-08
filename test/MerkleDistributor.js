@@ -27,7 +27,7 @@ describe("Merkledistributor", function () {
       const amountToSend = ethers.BigNumber.from("1000000000000000000000");
       await cryptoPuujin.mint(merkleContractAddress, amountToSend);
 
-      return {cryptoPuujin, merkleContractAddress, owner};
+      return {cryptoPuujin, merkleContractAddress, owner, merkledistributor};
     }
 
     describe("Deployment", function(){
@@ -37,13 +37,22 @@ describe("Merkledistributor", function () {
       })
 
       it("Should have the balance of 1_000_000 in merkle contract", async function (){
-        let balanceExpected = ethers.BigNumber.from("1000000000000000000000");
+        // let balanceExpected = ethers.BigNumber.from("1000000000000000000000");
+        let balanceExpected = "1000000000000000000000";
         const {cryptoPuujin, merkleContractAddress, owner} = await loadFixture(deployLoadFixture);
         expect(await cryptoPuujin.balanceOf(merkleContractAddress)).to.equal(balanceExpected);
       })
 
       it("Should be able to claim from address 0x1111111111111111111111111111111111111111 amount 1000000000000000000", async function() {
-        
+        const {cryptoPuujin, merkledistributor} = await loadFixture(deployLoadFixture);
+        let claimAcc1 = "0x1111111111111111111111111111111111111111";
+        let claimAmount = "1000000000000000000";
+        let proof = [
+          '0xb92c48e9d7abe27fd8dfd6b5dfdbfb1c9a463f80c712b66f3a5180a090cccafc',
+          '0xebf413f171e62ee05e6fc0f6541c40a28d8091507d93501d4e9183363e74783b'
+        ];
+        await merkledistributor.claim(claimAcc1, claimAmount, proof);
+        expect(await cryptoPuujin.balanceOf(claimAcc1)).to.equal(claimAmount);
       })
 
     }); //END OF DESCRIBE

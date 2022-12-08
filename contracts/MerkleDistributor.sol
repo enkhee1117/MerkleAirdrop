@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "hardhat/console.sol";
 
 pragma solidity ^0.8.0;
 
@@ -35,6 +36,11 @@ contract Merkledistributor {
         require(isValidProof, 'Invalid proof.');
 
         isClaimed[account] = true;
+        console.log(
+            "Claiming from %s acoount, This many: %s tokens",
+            account,
+            amount
+        );
         require(
             IERC20(token).transfer(account, amount),
             'Transfer failed.'
